@@ -1,13 +1,18 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+export default function handler(req: any, res: any) {
+  const requestMethod = req.method;
+  if (req.body) {
+    var body = JSON.parse(req.body);
+  }
+  switch (requestMethod) {
+    case "POST":
+      res
+        .status(200)
+        .json({
+          message: `You submitted the following data: ${JSON.stringify(body)}`,
+        });
 
-type Data = {
-  name: string
-}
-
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
+    // handle other HTTP methods
+    default:
+      res.status(200).json({ message: "Welcome to API Routes!" });
+  }
 }
